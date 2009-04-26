@@ -6,16 +6,16 @@ A [jQuery](http://jquery.com) plug-in to display [GitHub](http://github.com) iss
 
 ### Defaults
 
-<pre>$('a.defaults').githubVoice('defunkt', 'github-issues');</pre>
+    $('a.defaults').githubVoice('defunkt', 'github-issues');
 
 ### Customization
 
-<pre>$('a.custom').githubVoice('defunkt', 'github-issues', {
-  limit: 3,
-  actionText: "View feedback forum.",
-  loadingText: "Loading ideas...",
-  explanationText: "Below are the top three ideas."
-});</pre>
+    $('a.custom').githubVoice('defunkt', 'github-issues', {
+      limit: 3,
+      actionText: "View feedback forum.",
+      loadingText: "Loading ideas...",
+      explanationText: "Below are the top three ideas."
+    });
 
 ## Options
 

@@ -19,11 +19,23 @@ A [jQuery](http://jquery.com) plug-in to display [GitHub](http://github.com) iss
       }
     });
 
+### Filtering
+
+    $('a.filter').githubVoice('defunkt', 'github-issues', {
+      filter : {
+        user: /defunkt/g
+      }
+    });
+
 ## Options
 
 ### limit
 
 The number of issues to display. (Default: 5)
+
+### filter
+
+Gives you the ability to filter issues by any information returned by the API. At the time of writing the possible values are: number, votes, created_at, body, title, updated_at, user, state
 
 ### text.description
 

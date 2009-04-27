@@ -10,7 +10,7 @@
             .find('#github-voice-overlay')
               .css('opacity', 0.75)
               .click(function() {
-                $(document).trigger('github-voice.close');
+                $('#github-voice-overlay, #github-voice-wrapper').remove();
               });
         }
 
@@ -20,7 +20,7 @@
             .find('p.description').html(settings.text.description).end()
             .find('li.loading').html(settings.text.loading).end()
             .find('p.call-to-action a')
-              .html(settings.text.callToAction + '<span></span>')
+              .html(settings.text.callToAction)
               .attr('href', 'http://github.com/' + user + '/' + repository + '/issues');
 
         $.getJSON('http://github.com/api/v2/json/issues/list/' + user + '/' + repository + '/open?callback=?', function(data) {
@@ -43,16 +43,12 @@
             }
           });
 
-          $('#github-voice p.call-to-action span').text(' (' + data.issues.length + ' ideas)')
+          $('#github-voice p.call-to-action a').append('<span> (' + data.issues.length + ' ideas)</span>')
 
           $('#github-voice-wrapper').css('margin-top', -1 * ($('#github-voice-wrapper').height() / 2));
         });
 
         return false;
-      });
-
-      $(document).bind('github-voice.close', function() {
-        $('#github-voice-overlay, #github-voice-wrapper').remove();
       });
     });
   };

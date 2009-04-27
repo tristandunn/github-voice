@@ -28,17 +28,35 @@
             return ((a.votes < b.votes) ? 1 : ((a.votes > b.votes) ? -1 : 0));
           });
 
-          var list = $('#github-voice ol').empty();
+          var list  = $('#github-voice ol').empty();
+          var count = 0;
+          var valid;
 
           $.each(data.issues, function(index, issue) {
+            valid = true;
+
+            $.each(settings.filter, function(key, value) {
+              if (!issue[key].match(value)) {
+                valid = false;
+
+                return false;
+              }
+            });
+
+            if (!valid) {
+              return;
+            }
+
             list.append('<li>' +
               '<p class="votes">' +
                 '<em>' + issue.votes + '</em> votes' +
               '</p>' +
               '<h3><a href="http://github.com/' + user + '/' + repository + '/issues#issue/' + issue.number + '">' + issue.title + '</a></h3>' +
-            '</li>')
+            '</li>');
 
-            if (index == (settings.limit - 1)) {
+            count++;
+
+            if (count == settings.limit) {
               return false;
             }
           });
@@ -56,6 +74,7 @@
   $.fn.githubVoice.defaults = {
     limit   : 5,
     overlay : true,
+    filter  : {},
     text    : {
       loading     : "Loading...",
       description : "We've setup a feedback forum so you can tell us what's on your mind. Please go there and be heard!",

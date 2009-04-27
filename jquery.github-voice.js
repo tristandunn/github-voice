@@ -1,6 +1,6 @@
 (function($) {
   $.fn.githubVoice = function(user, repository, options) {
-    var settings = $.extend({}, $.fn.githubVoice.defaults, options);
+    var settings = $.extend(true, {}, $.fn.githubVoice.defaults, options);
 
     return this.each(function() {
       $(this).click(function() {

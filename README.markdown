@@ -6,15 +6,17 @@ A [jQuery](http://jquery.com) plug-in to display [GitHub](http://github.com) iss
 
 ### Defaults
 
-    $('a.defaults').githubVoice('defunkt', 'github-issues');
+    $('a.default').githubVoice('defunkt', 'github-issues');
 
 ### Customization
 
     $('a.custom').githubVoice('defunkt', 'github-issues', {
-      limit: 3,
-      actionText: "View feedback forum.",
-      loadingText: "Loading ideas...",
-      explanationText: "Below are the top three ideas."
+      limit : 3,
+      text  : {
+        loading      : "Loading ideas...",
+        description  : "Below are the top three ideas.",
+        callToAction : "View feedback forum."
+      }
     });
 
 ## Options
@@ -23,17 +25,17 @@ A [jQuery](http://jquery.com) plug-in to display [GitHub](http://github.com) iss
 
 The number of issues to display. (Default: 5)
 
-### actionText
+### text.description
 
-The call-to-action text used for the link below the issue list. (Default: "&amp;raquo; Go to our Feedback Forum")
+The text displayed above the issue list. (Default: "We've setup a feedback forum so you can tell us what's on your mind. Please go there and be heard!")
 
-### loadingText
+### text.loading
 
 The text displayed while the issues are being loaded. (Default: "Loading...")
 
-### explanationText
+### text.callToAction
 
-The text displayed above the issue list. (Default: "We've setup a feedback forum so you can tell us what's on your mind. Please go there and be heard!")
+The call-to-action text used for the link below the issue list. (Default: "&amp;raquo; Go to our Feedback Forum")
 
 ## License
 

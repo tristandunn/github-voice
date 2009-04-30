@@ -12,7 +12,11 @@
           $('body')
             .append('<div id="github-voice-overlay"></div>')
             .find('#github-voice-overlay')
-              .css('opacity', 0.75)
+              .css({
+                width   : $(window).width(),
+                height  : $(document).height(),
+                opacity : 0.75
+              })
               .click(function() {
                 $('#github-voice-overlay, #github-voice-wrapper').remove();
               });

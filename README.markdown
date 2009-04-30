@@ -27,6 +27,20 @@ A [jQuery](http://jquery.com) plug-in to display [GitHub](http://github.com) iss
       }
     });
 
+### Sorting
+
+    // Sort by property.
+    $('a.sort-desc').githubVoice('defunkt', 'github-issues', {
+      sort : 'number'
+    });
+
+    // Sort by a custom function.
+    $('a.sort-asc').githubVoice('defunkt', 'github-issues', {
+      sort : function(a, b) {
+        return ((a.number < b.number) ? -1 : ((a.number > b.number) ? 1 : 0));
+      }
+    });
+
 ## Options
 
 ### limit
@@ -36,6 +50,10 @@ The number of issues to display. (Default: 5)
 ### filter
 
 Gives you the ability to filter issues by any information returned by the API. At the time of writing the possible values are: number, votes, created_at, body, title, updated_at, user, state
+
+### sort
+
+Provide a string it will sort by that property in descending order. Provide a function to use a custom sort. (Default: "votes")
 
 ### text.description
 

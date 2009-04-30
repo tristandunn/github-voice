@@ -24,9 +24,15 @@
               .attr('href', 'http://github.com/' + user + '/' + repository + '/issues');
 
         $.getJSON('http://github.com/api/v2/json/issues/list/' + user + '/' + repository + '/open?callback=?', function(data) {
-          data.issues.sort(function(a, b) {
-            return ((a.votes < b.votes) ? 1 : ((a.votes > b.votes) ? -1 : 0));
-          });
+          var sort = settings.sort;
+
+          if (typeof sort == 'string') {
+            data.issues.sort(function(a, b) {
+              return ((a[sort] < b[sort]) ? 1 : ((a[sort] > b[sort]) ? -1 : 0));
+            });
+          } else if (typeof sort == 'function') {
+            data.issues.sort(sort);
+          }
 
           var list  = $('#github-voice ol').empty();
           var count = 0;
@@ -72,6 +78,7 @@
   };
 
   $.fn.githubVoice.defaults = {
+    sort    : 'votes',
     limit   : 5,
     overlay : true,
     filter  : {},

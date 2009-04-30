@@ -2,6 +2,10 @@
   $.fn.githubVoice = function(user, repository, options) {
     var settings = $.extend(true, {}, $.fn.githubVoice.defaults, options);
 
+    function updatePosition() {
+      $('#github-voice-wrapper').css('margin-top', -1 * ($('#github-voice-wrapper').height() / 2));
+    }
+
     return this.each(function() {
       $(this).click(function() {
         if (settings.overlay) {
@@ -22,6 +26,8 @@
             .find('p.call-to-action a')
               .html(settings.text.callToAction)
               .attr('href', 'http://github.com/' + user + '/' + repository + '/issues');
+
+        updatePosition();
 
         $.getJSON('http://github.com/api/v2/json/issues/list/' + user + '/' + repository + '/open?callback=?', function(data) {
           var sort = settings.sort;
@@ -69,7 +75,7 @@
 
           $('#github-voice p.call-to-action a').append('<span> (' + data.issues.length + ' ideas)</span>')
 
-          $('#github-voice-wrapper').css('margin-top', -1 * ($('#github-voice-wrapper').height() / 2));
+          updatePosition();
         });
 
         return false;

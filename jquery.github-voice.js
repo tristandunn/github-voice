@@ -34,19 +34,17 @@
         updatePosition();
 
         $.getJSON('http://github.com/api/v2/json/issues/list/' + user + '/' + repository + '/open?callback=?', function(data) {
-          var sort = settings.sort;
+          var sort  = settings.sort,
+              list  = $('#github-voice ol').empty(),
+              count = 0,
+              valid;
 
-          if (typeof sort == 'string') {
-            data.issues.sort(function(a, b) {
-              return ((a[sort] < b[sort]) ? 1 : ((a[sort] > b[sort]) ? -1 : 0));
-            });
-          } else if (typeof sort == 'function') {
-            data.issues.sort(sort);
-          }
-
-          var list  = $('#github-voice ol').empty();
-          var count = 0;
-          var valid;
+          data.issues.sort($.isFunction(sort)
+                           ? sort
+                           : function(a, b) {
+                               return ((a[sort] < b[sort]) ? 1 : ((a[sort] > b[sort]) ? -1 : 0));
+                              }
+                          );
 
           $.each(data.issues, function(index, issue) {
             valid = true;

@@ -47,18 +47,20 @@
                           );
 
           $.each(data.issues, function(index, issue) {
-            valid = true;
+            if (settings.filter) {
+              valid = true;
 
-            $.each(settings.filter, function(key, value) {
-              if (!issue[key].match(value)) {
-                valid = false;
+              $.each(settings.filter, function(key, value) {
+                if (!issue[key].match(value)) {
+                  valid = false;
 
-                return false;
+                  return false;
+                }
+              });
+
+              if (!valid) {
+                return;
               }
-            });
-
-            if (!valid) {
-              return;
             }
 
             list.append('<li>' +
@@ -68,9 +70,7 @@
               '<h3><a href="http://github.com/' + user + '/' + repository + '/issues#issue/' + issue.number + '">' + issue.title + '</a></h3>' +
             '</li>');
 
-            count++;
-
-            if (count == settings.limit) {
+            if (++count == settings.limit) {
               return false;
             }
           });
@@ -89,7 +89,7 @@
     sort    : 'votes',
     limit   : 5,
     overlay : true,
-    filter  : {},
+    filter  : null,
     text    : {
       loading     : "Loading...",
       description : "We've setup a feedback forum so you can tell us what's on your mind. Please go there and be heard!",

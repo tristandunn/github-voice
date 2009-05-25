@@ -1,6 +1,56 @@
 (function($) {
   $.fn.githubVoice = function(user, repository, options) {
+    var cache    = null;
     var settings = $.extend(true, {}, $.fn.githubVoice.defaults, options);
+
+    function onComplete(data) {
+      cache = data;
+
+      var sort  = settings.sort,
+          list  = $('#github-voice ol').empty(),
+          count = 0,
+          valid;
+
+      data.issues.sort($.isFunction(sort)
+                       ? sort
+                       : function(a, b) {
+                           return ((a[sort] < b[sort]) ? 1 : ((a[sort] > b[sort]) ? -1 : 0));
+                          }
+                      );
+
+      $.each(data.issues, function(index, issue) {
+        if (settings.filter) {
+          valid = true;
+
+          $.each(settings.filter, function(key, value) {
+            if (!issue[key].match(value)) {
+              valid = false;
+
+              return false;
+            }
+          });
+
+          if (!valid) {
+            return;
+          }
+        }
+
+        list.append('<li>' +
+          '<p class="votes">' +
+            '<em>' + issue.votes + '</em> votes' +
+          '</p>' +
+          '<h3><a href="http://github.com/' + user + '/' + repository + '/issues#issue/' + issue.number + '">' + issue.title + '</a></h3>' +
+        '</li>');
+
+        if (++count == settings.limit) {
+          return false;
+        }
+      });
+
+      $('#github-voice p.call-to-action a').append('<span> (' + data.issues.length + ' ideas)</span>')
+
+      updatePosition();
+    }
 
     function updatePosition() {
       $('#github-voice-wrapper').css('margin-top', -1 * ($('#github-voice-wrapper').height() / 2));
@@ -33,52 +83,11 @@
 
         updatePosition();
 
-        $.getJSON('http://github.com/api/v2/json/issues/list/' + user + '/' + repository + '/open?callback=?', function(data) {
-          var sort  = settings.sort,
-              list  = $('#github-voice ol').empty(),
-              count = 0,
-              valid;
-
-          data.issues.sort($.isFunction(sort)
-                           ? sort
-                           : function(a, b) {
-                               return ((a[sort] < b[sort]) ? 1 : ((a[sort] > b[sort]) ? -1 : 0));
-                              }
-                          );
-
-          $.each(data.issues, function(index, issue) {
-            if (settings.filter) {
-              valid = true;
-
-              $.each(settings.filter, function(key, value) {
-                if (!issue[key].match(value)) {
-                  valid = false;
-
-                  return false;
-                }
-              });
-
-              if (!valid) {
-                return;
-              }
-            }
-
-            list.append('<li>' +
-              '<p class="votes">' +
-                '<em>' + issue.votes + '</em> votes' +
-              '</p>' +
-              '<h3><a href="http://github.com/' + user + '/' + repository + '/issues#issue/' + issue.number + '">' + issue.title + '</a></h3>' +
-            '</li>');
-
-            if (++count == settings.limit) {
-              return false;
-            }
-          });
-
-          $('#github-voice p.call-to-action a').append('<span> (' + data.issues.length + ' ideas)</span>')
-
-          updatePosition();
-        });
+        if (cache) {
+          onComplete(cache)
+        } else {
+          $.getJSON('http://github.com/api/v2/json/issues/list/' + user + '/' + repository + '/open?callback=?', onComplete);
+        }
 
         return false;
       });

@@ -59,6 +59,10 @@
           .find('p.call-to-action a')
             .html(options.text.callToAction)
             .attr('href', 'http://github.com/' + options.path + '/issues');
+
+        $('#github-voice-wrapper .close').click(function() {
+          $('#github-voice-overlay, #github-voice-wrapper').remove();
+        });
       });
     }],
 
@@ -149,6 +153,7 @@
     },
     html : '\
     <div id="github-voice-wrapper"> \
+      <div class="close" /> \
       <h1>Feedback</h1> \
       <div id="github-voice"> \
         <p class="description"></p> \

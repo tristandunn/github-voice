@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+
+  <style type="text/css">
+    @import url(css/reset.css);
+    @import url(css/screen.css);
+    @import url(css/github-voice.css);
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>GitHub Voice</h1>
+</header>
+
+<section>
+  <h1>Examples</h1>
+
+  <ul>
+    <li><a href="#" class="default">View an example</a> using the default options.</li>
+  </ul>
+</section>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="../jquery.github-voice.js"></script>
+<script type="text/javascript">
+$(function() {
+  $('a.default').githubVoice('defunkt', 'github-issues');
+});
+</script>
+
+</body>
+</html>

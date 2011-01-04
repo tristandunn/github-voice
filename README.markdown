@@ -65,13 +65,13 @@ The text displayed while the issues are being loaded. (Default: "Loading...")
 
 ### text.callToAction
 
-The call-to-action text used for the link below the issue list. (Default: "&amp;raquo; Go to our Feedback Forum")
+The call-to-action text used for the link below the issue list. (Default: "&#38;raquo; Go to our Feedback Forum")
 
 ## License
 
 The MIT License
 
-Copyright (c) 2009 Tristan Dunn
+Copyright (c) 2011 Tristan Dunn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

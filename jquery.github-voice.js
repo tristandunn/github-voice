@@ -3,12 +3,8 @@
     options      = $.extend(true, {}, $.fn.githubVoice.defaults, options || {});
     options.path = user + '/' + repository;
 
-    this.setupExtras(options.setup || $.fn.githubVoice.base, options);
-    this.each(function() {
-      $(this).trigger('github-voice-initialize');
-    });
-
-    return this;
+    return this.setupExtras(options.setup || $.fn.githubVoice.base, options)
+               .trigger('github-voice-initialize');
   };
 
   $.fn.githubVoice.base = {
@@ -19,9 +15,11 @@
     }],
 
     bindEventListeners: [function(options) {
-      this.bind('github-voice-bindEventListeners', function() {
-        var element = $(this)
+      var path = 'http://github.com/api/v2/json/issues/list/' + options.path + '/open';
 
+      this.bind('github-voice-bindEventListeners', function() {
+        var
+        element = $(this);
         element.click(function() {
           var cache = element.data('cache');
 
@@ -35,12 +33,9 @@
           if (cache) {
             element.trigger('github-voice-update', [cache]);
           } else {
-            var url  = 'http://github.com/api/v2/json/issues/list/';
-            var path = options.path + '/open';
-
-            $.getJSON(url + path + '?callback=?', function(data) {
-              element.trigger('github-voice-update', [data]);
-              element.data('cache', data);
+            $.getJSON(path + '?callback=?', function(data) {
+              element.data('cache', data)
+                     .trigger('github-voice-update', [data]);
             });
           }
 
@@ -167,17 +162,19 @@
 
   // From:
   // http://yehudakatz.com/2009/04/20/evented-programming-with-jquery/
-  jQuery.fn.setupExtras = function(setup, options) {
+  $.fn.setupExtras = $.fn.setupExtras || function(setup, options) {
     for (property in setup) {
-      var self = this;
-
       if (setup[property] instanceof Array) {
-        for (var i = 0; i < setup[property].length; i++) {
-          setup[property][i].call(self, options);
+        var length = setup[property].length;
+
+        for (var i = 0; i < length; i++) {
+          setup[property][i].call(this, options);
         }
       } else {
-        setup[property].call(self, options);
+        setup[property].call(this, options);
       }
     }
+
+    return this;
   };
 })(jQuery);

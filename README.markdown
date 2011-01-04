@@ -4,13 +4,17 @@ A [jQuery](http://jquery.com) plug-in to display [GitHub](http://github.com) iss
 
 ## Examples
 
+### Online
+
+[Check out an online example.](http://tristandunn.github.com/github-voice)
+
 ### Defaults
 
-    $('a.default').githubVoice('defunkt', 'github-issues');
+    $('a.default').githubVoice('thoughtbot', 'paperclip');
 
 ### Customization
 
-    $('a.custom').githubVoice('defunkt', 'github-issues', {
+    $('a.custom').githubVoice('thoughtbot', 'paperclip', {
       limit : 3,
       text  : {
         loading      : "Loading ideas...",
@@ -21,21 +25,21 @@ A [jQuery](http://jquery.com) plug-in to display [GitHub](http://github.com) iss
 
 ### Filtering
 
-    $('a.filter').githubVoice('defunkt', 'github-issues', {
+    $('a.filter').githubVoice('thoughtbot', 'paperclip', {
       filter : {
-        user: /defunkt/g
+        user: /thoughtbot/g
       }
     });
 
 ### Sorting
 
     // Sort by property.
-    $('a.sort-desc').githubVoice('defunkt', 'github-issues', {
+    $('a.sort-desc').githubVoice('thoughtbot', 'paperclip', {
       sort : 'number'
     });
 
     // Sort by a custom function.
-    $('a.sort-asc').githubVoice('defunkt', 'github-issues', {
+    $('a.sort-asc').githubVoice('thoughtbot', 'paperclip', {
       sort : function(a, b) {
         return ((a.number < b.number) ? -1 : ((a.number > b.number) ? 1 : 0));
       }

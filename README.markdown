@@ -1,16 +1,22 @@
 # github-voice
 
-A [jQuery](http://jquery.com) plug-in to display [GitHub](http://github.com) issues like [UserVoice](http://uservoice.com).
+A jQuery plug-in to display GitHub issues like [UserVoice](http://uservoice.com).
 
-## Examples
+## Usage
 
-### Online
+1. Include [jQuery](http://jquery.com).
+2. Include [the plug-in](https://github.com/tristandunn/github-voice/raw/master/jquery.github-voice.js).
+3. Call `githubVoice` on an element with the username, project and optional options.
 
-[Check out an online example.](http://tristandunn.github.com/github-voice)
+## Example
 
-### Defaults
+    $(function() {
+      $('a.default').githubVoice('thoughtbot', 'paperclip');
+    });
 
-    $('a.default').githubVoice('thoughtbot', 'paperclip');
+[View an example online](http://tristandunn.github.com/github-voice).
+
+## Advanced Examples
 
 ### Customization
 

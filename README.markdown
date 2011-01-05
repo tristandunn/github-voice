@@ -14,7 +14,7 @@ A jQuery plug-in to display GitHub issues like [UserVoice](http://uservoice.com)
       $('a.default').githubVoice('thoughtbot', 'paperclip');
     });
 
-[View an example online](http://tristandunn.github.com/github-voice).
+[View an example online](http://tristandunn.com/projects/github-voice/).
 
 ## Advanced Examples
 

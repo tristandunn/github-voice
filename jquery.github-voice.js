@@ -46,13 +46,15 @@
 
     createElement: [function(options) {
       this.bind('github-voice-createElement', function() {
+        var text = options.text;
+
         $('body').append(options.html);
 
         $('#github-voice')
-          .find('p.description').html(options.text.description).end()
-          .find('li.loading').html(options.text.loading).end()
+          .find('p.description').html(text.description).end()
+          .find('li.loading').html(text.loading).end()
           .find('p.call-to-action a')
-            .html(options.text.callToAction)
+            .html(text.callToAction)
             .attr('href', 'http://github.com/' + options.path + '/issues');
 
         $('#github-voice-wrapper .close').click(function() {
@@ -146,18 +148,18 @@
       description : "We've setup a feedback forum so you can tell us what's on your mind. Please go there and be heard!",
       callToAction: "&raquo; Go to our Feedback Forum"
     },
-    html : '\
-    <div id="github-voice-wrapper"> \
-      <div class="close" /> \
-      <h1>Feedback</h1> \
-      <div id="github-voice"> \
-        <p class="description"></p> \
-        <ol> \
-          <li class="loading"></li> \
-        </ol> \
-        <p class="call-to-action"><a href="#"></a></p> \
-      </div> \
-    </div>'
+    html : '' +
+    '<div id="github-voice-wrapper">' +
+      '<div class="close" />' +
+      '<h1>Feedback</h1>' +
+      '<div id="github-voice">' +
+        '<p class="description"></p>' +
+        '<ol>' +
+          '<li class="loading"></li>' +
+        '</ol>' +
+        '<p class="call-to-action"><a href="#"></a></p>' +
+      '</div>' +
+    '</div>'
   };
 
   // From:

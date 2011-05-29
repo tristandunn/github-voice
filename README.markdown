@@ -10,9 +10,11 @@ A jQuery plug-in to display GitHub issues like [UserVoice](http://uservoice.com)
 
 ## Example
 
-    $(function() {
-      $('a.default').githubVoice('thoughtbot', 'paperclip');
-    });
+~~~ js
+$(function() {
+  $('a.default').githubVoice('thoughtbot', 'paperclip');
+});
+~~~
 
 [View an example online](http://tristandunn.com/projects/github-voice/).
 
@@ -20,36 +22,42 @@ A jQuery plug-in to display GitHub issues like [UserVoice](http://uservoice.com)
 
 ### Customization
 
-    $('a.custom').githubVoice('thoughtbot', 'paperclip', {
-      limit : 3,
-      text  : {
-        loading      : "Loading ideas...",
-        description  : "Below are the top three ideas.",
-        callToAction : "View feedback forum."
-      }
-    });
+~~~ js
+$('a.custom').githubVoice('thoughtbot', 'paperclip', {
+  limit : 3,
+  text  : {
+    loading      : "Loading ideas...",
+    description  : "Below are the top three ideas.",
+    callToAction : "View feedback forum."
+  }
+});
+~~~
 
 ### Filtering
 
-    $('a.filter').githubVoice('thoughtbot', 'paperclip', {
-      filter : {
-        user: /thoughtbot/g
-      }
-    });
+~~~ js
+$('a.filter').githubVoice('thoughtbot', 'paperclip', {
+  filter : {
+    user: /thoughtbot/g
+  }
+});
+~~~
 
 ### Sorting
 
-    // Sort by property.
-    $('a.sort-desc').githubVoice('thoughtbot', 'paperclip', {
-      sort : 'number'
-    });
+~~~ js
+// Sort by property.
+$('a.sort-desc').githubVoice('thoughtbot', 'paperclip', {
+  sort : 'number'
+});
 
-    // Sort by a custom function.
-    $('a.sort-asc').githubVoice('thoughtbot', 'paperclip', {
-      sort : function(a, b) {
-        return ((a.number < b.number) ? -1 : ((a.number > b.number) ? 1 : 0));
-      }
-    });
+// Sort by a custom function.
+$('a.sort-asc').githubVoice('thoughtbot', 'paperclip', {
+  sort : function(a, b) {
+    return ((a.number < b.number) ? -1 : ((a.number > b.number) ? 1 : 0));
+  }
+});
+~~~
 
 ## Options
 

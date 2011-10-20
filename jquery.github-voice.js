@@ -1,10 +1,20 @@
 (function($) {
   $.fn.githubVoice = function(user, repository, options) {
-    options      = $.extend(true, {}, $.fn.githubVoice.defaults, options || {});
+    var githubVoice  = $.fn.githubVoice,
+        options      = $.extend(true, {}, githubVoice.defaults, options || {}),
+        setup        = options.setup || githubVoice.base;
+
     options.path = user + '/' + repository;
 
-    return this.setupExtras(options.setup || $.fn.githubVoice.base, options)
-               .trigger('github-voice-initialize');
+    for (property in setup) {
+      var methods = setup[property];
+
+      for (var i = 0, length = methods.length; i < length; i++) {
+        methods[i].call(this, options);
+      }
+    }
+
+    return this.trigger('github-voice-initialize');
   };
 
   $.fn.githubVoice.base = {
@@ -160,23 +170,5 @@
         '<p class="call-to-action"><a href="#"></a></p>' +
       '</div>' +
     '</div>'
-  };
-
-  // From:
-  // http://yehudakatz.com/2009/04/20/evented-programming-with-jquery/
-  $.fn.setupExtras = $.fn.setupExtras || function(setup, options) {
-    for (property in setup) {
-      if (setup[property] instanceof Array) {
-        var length = setup[property].length;
-
-        for (var i = 0; i < length; i++) {
-          setup[property][i].call(this, options);
-        }
-      } else {
-        setup[property].call(this, options);
-      }
-    }
-
-    return this;
   };
 })(jQuery);

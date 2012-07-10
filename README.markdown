@@ -24,7 +24,7 @@ $(function() {
 
 ~~~ js
 $('a.custom').githubVoice('thoughtbot', 'paperclip', {
-  query : { 'labels' : 'bug,idea' },
+  query : { 'labels' : 'idea', 'per_page' : 3 },
   text  : {
     loading      : "Loading ideas...",
     description  : "Below are the top three ideas.",
@@ -56,7 +56,7 @@ $('a.sort-updated-desc').githubVoice('thoughtbot', 'paperclip', {
 
 ### filter
 
-Gives you the ability to filter issues by any information returned by the API. See [Issues | GitHub API](http://developer.github.com/v3/issues/) for valid properties.
+Gives you the ability to filter issues by any information returned by the API. See the [GitHub Issues API](http://developer.github.com/v3/issues/) for valid properties.
 
 ### overlay
 
@@ -64,7 +64,7 @@ Enable or disable the overlay when displaying issues.
 
 ### query
 
-Custom query options passed to the GitHub API. See [Issues | GitHub API](http://developer.github.com/v3/issues/) for more details.
+Custom query options passed to the GitHub API. See the [GitHub Issues API](http://developer.github.com/v3/issues/) for more details.
 
 ### text.description
 

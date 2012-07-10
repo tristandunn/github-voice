@@ -25,7 +25,7 @@
     }],
 
     bindEventListeners: [function(options) {
-      var path = 'http://github.com/api/v2/json/issues/list/' + options.path + '/open';
+      var path = 'https://api.github.com/repos/' + options.path + '/issues';
 
       this.bind('github-voice-bindEventListeners', function() {
         var
@@ -43,9 +43,11 @@
           if (cache) {
             element.trigger('github-voice-update', [cache]);
           } else {
-            $.getJSON(path + '?callback=?', function(data) {
-              element.data('cache', data)
-                     .trigger('github-voice-update', [data]);
+            $.getJSON(path + '?callback=?', options.query, function(response) {
+              var issues = response.data;
+
+              element.data('cache', issues)
+                     .trigger('github-voice-update', [issues]);
             });
           }
 
@@ -90,21 +92,11 @@
     }],
 
     update: [function(options) {
-      this.bind('github-voice-update', function(event, data) {
-        var sort  = options.sort,
-            list  = $('#github-voice ol').empty(),
-            count = 0,
+      this.bind('github-voice-update', function(event, issues) {
+        var list = $('#github-voice ol').empty(),
             valid;
 
-        data.issues.sort($.isFunction(sort)
-                         ? sort
-                         : function(a, b) {
-                             return ((a[sort] < b[sort]) ?
-                                     1 : ((a[sort] > b[sort]) ? -1 : 0));
-                           }
-                        );
-
-        $.each(data.issues, function(index, issue) {
+        $.each(issues, function(index, issue) {
           if (options.filter) {
             valid = true;
 
@@ -123,17 +115,13 @@
 
           list.append('<li>' +
             '<p class="votes">' +
-              '<em>' + issue.votes + '</em> votes' +
+              '<em>' + issue.comments + '</em> comments' +
             '</p>' +
             '<h3><a href="http://github.com/' + options.path + '/issues#issue/' + issue.number + '">' + issue.title + '</a></h3>' +
           '</li>');
-
-          if (++count == options.limit) {
-            return false;
-          }
         });
 
-        $('#github-voice p.call-to-action a').append('<span> (' + data.issues.length + ' ideas)</span>')
+        $('#github-voice p.call-to-action a').append('<span> (' + issues.length + ' ideas)</span>')
 
         $(this).trigger('github-voice-updatePosition');
       });
@@ -149,10 +137,9 @@
   };
 
   $.fn.githubVoice.defaults = {
-    sort    : 'votes',
-    limit   : 5,
     overlay : true,
     filter  : null,
+    query   : { 'sort' : 'comments', 'per_page' : 5 },
     text    : {
       loading     : "Loading...",
       description : "We've setup a feedback forum so you can tell us what's on your mind. Please go there and be heard!",

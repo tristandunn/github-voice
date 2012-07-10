@@ -24,7 +24,7 @@ $(function() {
 
 ~~~ js
 $('a.custom').githubVoice('thoughtbot', 'paperclip', {
-  limit : 3,
+  query : { 'labels' : 'bug,idea' },
   text  : {
     loading      : "Loading ideas...",
     description  : "Below are the top three ideas.",
@@ -46,32 +46,25 @@ $('a.filter').githubVoice('thoughtbot', 'paperclip', {
 ### Sorting
 
 ~~~ js
-// Sort by property.
-$('a.sort-desc').githubVoice('thoughtbot', 'paperclip', {
-  sort : 'number'
-});
-
-// Sort by a custom function.
-$('a.sort-asc').githubVoice('thoughtbot', 'paperclip', {
-  sort : function(a, b) {
-    return ((a.number < b.number) ? -1 : ((a.number > b.number) ? 1 : 0));
-  }
+// Sort by property. (See GitHub API for valid values.)
+$('a.sort-updated-desc').githubVoice('thoughtbot', 'paperclip', {
+  query : { 'sort' : 'updated', 'direction' : 'desc' }
 });
 ~~~
 
 ## Options
 
-### limit
-
-The number of issues to display. (Default: 5)
-
 ### filter
 
-Gives you the ability to filter issues by any information returned by the API. At the time of writing the possible values are: number, votes, created_at, body, title, updated_at, user, state
+Gives you the ability to filter issues by any information returned by the API. See [Issues | GitHub API](http://developer.github.com/v3/issues/) for valid properties.
 
-### sort
+### overlay
 
-Provide a string it will sort by that property in descending order. Provide a function to use a custom sort. (Default: "votes")
+Enable or disable the overlay when displaying issues.
+
+### query
+
+Custom query options passed to the GitHub API. See [Issues | GitHub API](http://developer.github.com/v3/issues/) for more details.
 
 ### text.description
 
